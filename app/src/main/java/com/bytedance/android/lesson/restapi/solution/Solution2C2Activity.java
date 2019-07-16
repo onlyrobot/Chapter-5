@@ -52,6 +52,8 @@ public class Solution2C2Activity extends AppCompatActivity {
     private Call<FeedResponse> feedCall = null;
     private Call<PostVideoResponse> postCall = null;
 
+    MultipartBody.Part coverImage;
+    MultipartBody.Part video;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,10 +168,12 @@ public class Solution2C2Activity extends AppCompatActivity {
 
             if (requestCode == PICK_IMAGE) {
                 mSelectedImage = data.getData();
+                coverImage = getMultipartFromUri("cover_image", mSelectedImage);
                 Log.d(TAG, "selectedImage = " + mSelectedImage);
                 mBtn.setText(R.string.select_a_video);
             } else if (requestCode == PICK_VIDEO) {
                 mSelectedVideo = data.getData();
+                video = getMultipartFromUri("video", mSelectedVideo);
                 Log.d(TAG, "mSelectedVideo = " + mSelectedVideo);
                 mBtn.setText(R.string.post_it);
             }
@@ -191,7 +195,7 @@ public class Solution2C2Activity extends AppCompatActivity {
         // if success, make a text Toast and show
         Retrofit retrofit = RetrofitManager.get("http://test.androidcamp.bytedance.com/");
         Call<PostVideoResponse> postVideoResponseCall = retrofit.
-                create(IMiniDouyinService.class).post("1120172773", "彭瑶", mSelectedImage, mSelectedVideo);
+                create(IMiniDouyinService.class).post("1120172773", "彭瑶", coverImage, video);
         postCall = postVideoResponseCall;
         postVideoResponseCall.enqueue(new Callback<PostVideoResponse>() {
             @Override

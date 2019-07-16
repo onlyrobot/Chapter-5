@@ -9,16 +9,12 @@ import com.google.gson.annotations.SerializedName;
 public class PostVideoResponse {
 
     // TODO-C2 (3) Implement your PostVideoResponse Bean here according to the response json
-    @SerializedName("result") private String result;
-    @SerializedName("url") private String url;
     @SerializedName("success") private boolean success;
-    public String getResult(){
-        return result;
-    }
-    public String getUrl(){
-        return url;
-    }
+    @SerializedName("item") private Feed item;
     public boolean getSuccess(){
         return success;
+    }
+    public Feed getItem(){
+        return item;
     }
 }
